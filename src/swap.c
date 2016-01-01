@@ -11,29 +11,59 @@ COMPILE:        gcc swap.c utility.c -o swap -Wall
 
 #include "leaf.h"
 
-int swap(clparse *clinput)
+int runSwap(int argc, char **argv){
+
+ metaData hdrData;
+ 
+ if (argc <3) swapUsage();
+ strcpy(hdrData.infile,argv[ 2 ]); 
+ if (argc >=4){ 
+  strcpy(hdrData.outfile,argv[ 3 ]); 
+ }
+ else{
+  strcpy(hdrData.outfile, hdrData.infile); 
+  strcat(hdrData.outfile,".out");
+ }
+ if (argc == 5){
+  hdrData.bpp=atoi(argv[ 4 ]);
+ }
+ else{
+  hdrData.bpp=2;
+ }
+
+ swap(&hdrData); 
+ return (EXIT_SUCCESS);
+}
+
+int swap(metaData *hdrData)
 {
  
  FILE *fin, *fout;
  int remainderPixels;
  void *img; 
+
+ if (!strcmp(hdrData->infile,"")) {
+  swapUsage();
+ } 
 	
- fin=openFile("",clinput->infile,"rb");
- fout=openFile("",clinput->outfile,"wb");
+ fin=openFile("",hdrData->infile,"rb");
+ fout=openFile("",hdrData->outfile,"wb");
  	
- if((img  = (void *) calloc(PIXELS, clinput->bpp))== NULL) memoryCheck();
+ if((img  = (void *) calloc(PIXELS, hdrData->bpp))== NULL) memoryCheck();
 
- if ((clinput->bpp == 2) | (clinput->bpp == 4)| (clinput->bpp == 8)){
+ if ((hdrData->bpp == 2) | (hdrData->bpp == 4)| (hdrData->bpp == 8)){
 
-  while ((remainderPixels=fread(img,clinput->bpp,PIXELS,fin)) == PIXELS){
-   byteSwap(img, PIXELS, clinput->bpp);
-   fwrite(img,clinput->bpp,PIXELS,fout);
+  while ((remainderPixels=fread(img,hdrData->bpp,PIXELS,fin)) == PIXELS){
+   byteSwap(img, PIXELS, hdrData->bpp);
+   fwrite(img,hdrData->bpp,PIXELS,fout);
   }	
 	
-  byteSwap(img,remainderPixels, clinput->bpp);
-  fwrite(img,clinput->bpp,remainderPixels,fout);
+  byteSwap(img,remainderPixels, hdrData->bpp);
+  fwrite(img,hdrData->bpp,remainderPixels,fout);
 
  }
+
+ free(img); 
 
  fclose(fin);
  fclose(fout);
@@ -71,4 +101,10 @@ int byteSwap(void *dataIn, int n,  int numBytes){
 
 }
 
-
+void swapUsage(){
+ fprintf(stderr,"\nUsage: leaf -swap infile [outfile] [bpp] \n\n");
+ fprintf(stderr, "   infile        Input image\n"); 	   
+ fprintf(stderr, "   outfile       Output image\n"); 
+ fprintf(stderr, "   bpp           bytes per pixel (2,4,8) \n\n");
+ exit(EXIT_FAILURE);
+}

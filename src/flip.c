@@ -5,182 +5,96 @@ AUTHOR:	 	Will Grey
 VERSION:	2015-10-29	
 LICENSE:	This is free and unencumbered software 
                 released into the public domain.
-COMPILE:        gcc flip.c utility.c -o flip -Wall
 */
 
 
 #include "leaf.h"
 
-int flipImg(clparse *clinput){
+int flip(int argc, char **argv, int (*f)(FILE *, FILE *, metaData *)){
 
- int ydim;
- struct stat size;
+ metaData p;
  FILE *fin, *fout;
-   	
- if (clinput->xdim < clinput->bpp){
-  fprintf(stderr, "Need number of pixels in x dimension (-xdim)\n");  
-  exit(EXIT_FAILURE);
- }
-	
- fin=openFile("",clinput->infile,"rb");
- fout=openFile("",clinput->outfile,"wb");
-	
- ydim = size.st_size / (clinput->xdim * clinput->bpp);
- flip(fin,fout,clinput->xdim,ydim,clinput->bpp,clinput->flag);			
- fclose(fin);
- fclose(fout);
-	
- return (EXIT_SUCCESS);
-	
-}
+ struct stat size; 
 
-int flip(FILE *fin, FILE *fout, int xdim, int ydim, int bpp, int flip){
+ p.bpp=1;
+ p.channels=1;
+
+ if (argc < 5) flipUsage("-[x/y]flip");
  
- data_t imgIn, imgOut;
-
- if((imgIn.s  = malloc(xdim * ydim * bpp)) == NULL) memoryCheck();
- if((imgOut.s = malloc(xdim * ydim * bpp)) == NULL) memoryCheck();
- fread(imgIn.s,bpp,xdim*ydim,fin);
+ fin=openFile("",argv[ 2 ],"rb");
+ fout=openFile("",argv[ 3 ],"wb");	
+ p.xdim=atoi(argv[ 4 ]);
+ if (argc >= 6) p.bpp=atoi(argv[ 5 ]);
+ if (argc == 7) p.channels=atoi(argv[ 6 ]);
  
- switch(flip){
-  case 0:
-   switch (bpp){
-    case 1:
-     xFlip8(&imgIn,&imgOut,xdim,ydim,bpp);
-     break;
-    case 2:
-     xFlip16(&imgIn,&imgOut,xdim,ydim,bpp);
-     break;
-    case 4:
-     xFlip32(&imgIn,&imgOut,xdim,ydim,bpp);
-     break;
-    case 8:
-     xFlip64(&imgIn,&imgOut,xdim,ydim,bpp);
-     break; 
-    default:
-     break;
-  }
-  case 1:
-   switch (bpp){
-    case 1:
-     xFlip8(&imgIn,&imgOut,xdim,ydim,bpp);
-     break;
-    case 2:
-     xFlip16(&imgIn,&imgOut,xdim,ydim,bpp);
-     break;
-    case 4:
-     xFlip32(&imgIn,&imgOut,xdim,ydim,bpp);
-     break;
-    case 8:
-     xFlip64(&imgIn,&imgOut,xdim,ydim,bpp);
-     break; 
-    default:
-     break;
-  }
- }
+ if (stat(argv[2], &size) == -1) fileReadError(argv[2]);
+ else p.ydim = size.st_size / (p.xdim * p.bpp * p.channels);
 
-
- fwrite(imgOut.s,bpp,xdim*ydim,fout);
- free(imgIn.s);
- free(imgOut.s);
-
+ f(fin,fout,&p); 
  return (EXIT_SUCCESS);
 
 }
 
-int xFlip8(data_t *imgIn, data_t *imgOut, int xdim, int ydim, int bpp){
- 
- int x, y;
+void flipUsage(char *t){
 
- for (y = 0; y < ydim; y++)
-  for (x = 0; x < xdim; x++)	
-    imgOut->c[((y * xdim) + (xdim - 1 - x)) * bpp]=imgIn->c[((y * xdim) + x) * bpp];
+ fprintf(stderr,"\nUsage: leaf %s inImg outImg xdims [bpp] [channels]\n", t);
+ fprintf(stderr, "    infile           input image\n");
+ fprintf(stderr, "    outfile          output image\n"); 
+ fprintf(stderr, "    xdim             number of pixels per row\n"); 
+ fprintf(stderr, "    bpp              bytes per pixel: 1,2,4, or 8\n");
+ fprintf(stderr, "    channels         Number of channels\n\n");
+ exit(EXIT_FAILURE);
+
+}
+
+
+int xflip(FILE *fin, FILE *fout,  metaData *p){
+
+unsigned char *inImg, *outImg;
+ int x, y, i, j;
+ 
+ inImg  = (unsigned char *) malloc(p->xdim * p->ydim * p->bpp);
+ outImg = (unsigned char *) malloc(p->xdim * p->ydim * p->bpp);
+ 
+ for (j = 0; j < p->channels; j++){
+  fread(inImg, p->bpp, p->xdim*p->ydim, fin);
+  for (y = 0; y < p->ydim; y++)
+   for (x = 0; x < p->xdim; x++) 
+    for (i=0;i<p->bpp;i++)
+     *(outImg + ((y * p->xdim) + (p->xdim - x - 1)) * p->bpp + i) 
+     = *(inImg + ((y * p->xdim) + x) * p->bpp + i);
   
- return (EXIT_SUCCESS);
+  fwrite(outImg, p->bpp, p->xdim*p->ydim, fout);
+ } 
+
+ free(inImg);
+ free(outImg);
+ return EXIT_SUCCESS;
 
 }
 
-int yFlip8(data_t *imgIn, data_t *imgOut, int xdim, int ydim, int bpp){
+int yflip(FILE *fin, FILE *fout,  metaData *p){
+
+unsigned char *inImg, *outImg;
+ int x, y, i, j;
  
- int x, y;
-
- for (y = 0; y < ydim; y++)
-  for (x = 0; x < xdim; x++)	
-    imgOut->c[((((ydim - 1 - y) * xdim)) + x) * bpp]=imgIn->c[((y * xdim) + x) * bpp];
-  
- return (EXIT_SUCCESS);
-
-}
-
-int xFlip16(data_t *imgIn, data_t *imgOut, int xdim, int ydim, int bpp){
+ inImg  = (unsigned char *) malloc(p->xdim * p->ydim * p->bpp);
+ outImg = (unsigned char *) malloc(p->xdim * p->ydim * p->bpp);
  
- int x, y;
-
- for (y = 0; y < ydim; y++)
-  for (x = 0; x < xdim; x++)	
-    imgOut->i[((y * xdim) + (xdim - 1 - x)) * bpp]=imgIn->i[((y * xdim) + x) * bpp];
+ for (j = 0; j < p->channels; j++){
+  fread(inImg, p->bpp, p->xdim*p->ydim, fin);
+  for (y = 0; y < p->ydim; y++)
+   for (x = 0; x < p->xdim; x++) 
+    for (i=0;i<p->bpp;i++)
+     *(outImg + (((p->ydim - 1 - y) * p->xdim) + x) * p->bpp + i)
+     = *(inImg + ((y * p->xdim) + x) * p->bpp + i);
   
- return (EXIT_SUCCESS);
+  fwrite(outImg, p->bpp, p->xdim*p->ydim, fout);
+ } 
 
-}
-
-int yFlip16(data_t *imgIn, data_t *imgOut, int xdim, int ydim, int bpp){
- 
- int x, y;
-
- for (y = 0; y < ydim; y++)
-  for (x = 0; x < xdim; x++)	
-    imgOut->i[((((ydim - 1 - y) * xdim)) + x) * bpp]=imgIn->i[((y * xdim) + x) * bpp];
-  
- return (EXIT_SUCCESS);
-
-}
-
-int xFlip32(data_t *imgIn, data_t *imgOut, int xdim, int ydim, int bpp){
- 
- int x, y;
-
- for (y = 0; y < ydim; y++)
-  for (x = 0; x < xdim; x++)	
-    imgOut->f[((y * xdim) + (xdim - 1 - x)) * bpp]=imgIn->f[((y * xdim) + x) * bpp];
-  
- return (EXIT_SUCCESS);
-
-}
-
-int yFlip32(data_t *imgIn, data_t *imgOut, int xdim, int ydim, int bpp){
- 
- int x, y;
-
- for (y = 0; y < ydim; y++)
-  for (x = 0; x < xdim; x++)	
-    imgOut->f[((((ydim - 1 - y) * xdim)) + x) * bpp]=imgIn->f[((y * xdim) + x) * bpp];
-  
- return (EXIT_SUCCESS);
-
-}
-
-int xFlip64(data_t *imgIn, data_t *imgOut, int xdim, int ydim, int bpp){
- 
- int x, y;
-
- for (y = 0; y < ydim; y++)
-  for (x = 0; x < xdim; x++)	
-    imgOut->d[((y * xdim) + (xdim - 1 - x)) * bpp]=imgIn->d[((y * xdim) + x) * bpp];
-  
- return (EXIT_SUCCESS);
-
-}
-
-int yFlip64(data_t *imgIn, data_t *imgOut, int xdim, int ydim, int bpp){
- 
- int x, y;
-
- for (y = 0; y < ydim; y++)
-  for (x = 0; x < xdim; x++)	
-    imgOut->d[((((ydim - 1 - y) * xdim)) + x) * bpp]=imgIn->d[((y * xdim) + x) * bpp];
-  
- return (EXIT_SUCCESS);
+ free(inImg);
+ free(outImg);
+ return EXIT_SUCCESS;
 
 }
 

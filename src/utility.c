@@ -12,6 +12,106 @@ LICENSE:	This is free and unencumbered software
 
 #include "leaf.h"
 
+int diagnosticTest(metaData *p){
+
+ fprintf(stdout," %d\n", p->xdim);
+ fprintf(stdout," %d\n", p->ydim);
+ fprintf(stdout," %d\n", p->channels);
+ return (EXIT_SUCCESS);
+
+}
+
+int getYdim2(char *filename, metaData *param){
+ 
+ struct stat size;
+ if (stat(filename, &size) == -1) fileReadError(filename);
+ param->ydim2 = size.st_size / (param->xdim2 * param->bpp * param->channels);
+
+ return (EXIT_SUCCESS);
+}
+
+int getYdim(char *filename, metaData *param){
+ 
+ struct stat size;
+ if (stat(filename, &size) == -1) fileReadError(filename);
+ param->ydim = size.st_size / (param->xdim * param->bpp * param->channels);
+
+ return (EXIT_SUCCESS);
+}
+
+int getPixels(char *filename, metaData *param){
+ 
+ struct stat size;
+ if (stat(filename, &size) == -1) fileReadError(filename);
+ param->pixels = size.st_size / (param->bpp * param->channels);
+
+ return (EXIT_SUCCESS);
+}
+
+int dataType2bpp(int datatype){
+ 
+ int bpp;
+
+ switch (datatype){
+ case 1:
+  bpp=1;  
+  break;
+ case 2:
+  bpp=2;  
+  break; 
+ case 3:
+  bpp=2;  
+  break;  
+ case 4:
+  bpp=4; 
+  break;
+ case 8:
+  bpp=8;  
+  break; 
+ default:
+  break;
+ } 
+ return bpp;
+}
+
+char * itoa(int num){
+
+ int size;
+ char *x;
+ 
+ size = log10(num) + 1;
+ x = malloc(size);
+ sprintf(x, "%d", num);
+ return x;
+
+}
+
+int compareFileSize(char *img1, char *img2)
+{
+ struct stat size1, size2;
+ if (stat(img1, &size1) == -1) fileReadError(img1);
+ if (stat(img2, &size2) == -1) fileReadError(img2);
+ if (size1.st_size != size2.st_size) fileSizeErr(img1,img2); 
+ return(EXIT_SUCCESS);
+}
+
+int fileSizeErr(char *img1, char *img2)
+{
+ fprintf(stderr,"\nFiles %s and %s differ in size\n\n",img1, img2);
+ exit(EXIT_FAILURE);
+}
+
+int fileReadError(char *img)
+{
+ fprintf(stderr,"\nCannot access file: %s\n\n",img);
+ exit(EXIT_FAILURE);
+}
+
+int checkFileExists(char *f) {
+ struct stat s;
+ return stat(f, &s) == 0;
+}
+
 FILE *openFile(char *path, char *fileName, char *rw)
 {
  
@@ -52,6 +152,17 @@ FILE *openFile(char *path, char *fileName, char *rw)
   
  }
  
+ 
+ if ( !strcmp(rw, "r++") ){
+ 
+  fp = fopen(fullPathName, "r++");
+  if ( fp == NULL ){
+   fprintf( stderr, "Error opening file %s\n", fullPathName);
+   exit(EXIT_FAILURE); 
+  }
+  
+ }
+
  if ( !strcmp(rw, "w") ){
  
   fp = fopen(fullPathName, "w");
@@ -99,23 +210,80 @@ int memoryCheck(void)
  exit(EXIT_FAILURE);
 }
 
-int createEnviHeader(char *pathName, char *fileName, int xdim, int ydim, int bands, int dataType){
+int createEnviHeader(char *pathName, char *fileName, metaData *hdrFile){
  
  FILE *fp;
  fp=openFile(pathName, fileName, "w");
  
  fprintf(fp,"ENVI\n");
- fprintf(fp,"samples   = %d\n", xdim);
- fprintf(fp,"lines     = %d\n", ydim);
- fprintf(fp,"bands     = %d\n", bands);
- fprintf(fp,"data type = %d\n", dataType);
- fprintf(fp,"byte order = 1\n");
+ fprintf(fp,"samples   = %d\n", hdrFile->xdim);
+ fprintf(fp,"lines     = %d\n", hdrFile->ydim);
+ fprintf(fp,"bands     = %d\n", hdrFile->channels);
+ fprintf(fp,"data type = %d\n", hdrFile->dataType);
+ fprintf(fp,"byte order = %d\n", hdrFile->byteOrder);
  
  fclose(fp);
  
  return 0;
 
 }
+
+int readEnviHeader(char *pathName, char *headerFile, metaData *hdrFile){
+
+ FILE *f;
+ f = fopen (headerFile, "r");
+ char line[ENVI_HEADER_LINE_LEN];
+ char *token;
+ int i;
+
+ while(fgets(line, ENVI_HEADER_LINE_LEN, f) != NULL){
+
+  token = strtok(line," ");
+
+  if (!strcasecmp(token, "samples")) {
+   for (i=0;i<2;i++)
+    token = strtok(NULL," ");
+   hdrFile->xdim=atoi(token);    }
+
+  else if (!strcasecmp(token, "lines")) {
+   for (i=0;i<2;i++)
+    token = strtok(NULL," ");
+   hdrFile->ydim=atoi(token); }
+
+  else if (!strcasecmp(token, "bands")) {
+   for (i=0;i<2;i++)
+    token = strtok(NULL," ");
+   hdrFile->channels=atoi(token);  }
+
+  else if (!strcasecmp(token, "data")) {
+   for (i=0;i<3;i++)
+    token = strtok(NULL," ");
+   hdrFile->dataType=atoi(token);
+
+   switch (hdrFile->dataType){
+    case 1:
+     hdrFile->bpp=1;
+    case 2:
+     hdrFile->bpp=2;
+    case 3:
+     hdrFile->bpp=4;
+    case 4:
+     hdrFile->bpp=4;
+    case 8:
+     hdrFile->bpp=8;
+   }
+  }
+
+  else if (!strcasecmp(token, "byte")) {
+   for (i=0;i<3;i++)
+    token = strtok(NULL," ");
+   hdrFile->byteOrder=atoi(token);  }  
+
+ } 
+
+ return (EXIT_SUCCESS);
+}
+
 
 int counter(unsigned int element, unsigned int nElements)
 
@@ -159,24 +327,6 @@ At end of program write:
 
   return(walltime);
 }
-
-int dimap(char *path){
-  
-  DIR *d;
-  struct dirent *dir;
-  d = opendir(path);
-  
-  if (d){
-    while ((dir = readdir(d)) != NULL)
-     if (dir->d_type == DT_REG)
-      printf("%s\n", dir->d_name);
-   
-    closedir(d);
-  }
-
-  return(EXIT_SUCCESS);
-}
-
 
 float * convertByte2Float(unsigned char *dataIn, int n){
 
