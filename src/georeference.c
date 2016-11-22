@@ -1,7 +1,7 @@
 /**************************************************
  
  Program for georeferncing images using affine transform.
- To compile: gcc leafrotate.c -o leafrotate -Wall
+ To compile: gcc earthrotate.c -o earthrotate -Wall
  Last update: 20 September 2015
 
 ***************************************************/
@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
-#include "leaf.h"
+#include "earth.h"
 
 int georeference(int argc, char *argv[])
 {
@@ -59,7 +59,7 @@ int georeference(int argc, char *argv[])
 }
 
 void georeferenceUsage(){
- fprintf(stderr,"Usage: leaf -georeference infile outfile xdim gcpFile [bytesPerPixel]\n\n");
+ fprintf(stderr,"Usage: earth -georeference infile outfile xdim gcpFile [bytesPerPixel]\n\n");
  fprintf(stderr, "   infile            Unregistered input image 1\n");
  fprintf(stderr, "   outfile           Georeferenced output image 2\n");   		
  fprintf(stderr, "   xdim              Number of pixels in x dimension\n");

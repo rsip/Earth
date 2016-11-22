@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 double multipleCorrelation(double **X, double *y, int n, int m, double *b){
 
@@ -487,6 +487,21 @@ double ** multiplyMatrix(double **A, double **B,  int m, int n1, int n2){
   return X;
 }
 
+double * multiplyMatrixVector(double **A, double *b,  int m, int n){
+ 
+ int i, j;
+ double *x;
+ x=allocateDoubleVector(n);
+
+ for (i=0; i<n; i++)
+  x[i]=0.0;
+
+ for (j=0; j<n; j++)
+  for (i=0; i<m; i++)
+   x[j]+=A[i][j]*b[i];
+     
+ return x;
+}
 
 double ** trasposeMatrix(double **A, int n, int m){
  

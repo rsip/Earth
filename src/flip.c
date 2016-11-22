@@ -8,7 +8,7 @@ LICENSE:	This is free and unencumbered software
 */
 
 
-#include "leaf.h"
+#include "earth.h"
 
 int flip(int argc, char **argv, int (*f)(FILE *, FILE *, metaData *)){
 
@@ -37,7 +37,7 @@ int flip(int argc, char **argv, int (*f)(FILE *, FILE *, metaData *)){
 
 void flipUsage(char *t){
 
- fprintf(stderr,"\nUsage: leaf %s inImg outImg xdims [bpp] [channels]\n", t);
+ fprintf(stderr,"\nUsage: earth %s inImg outImg xdims [bpp] [channels]\n", t);
  fprintf(stderr, "    infile           input image\n");
  fprintf(stderr, "    outfile          output image\n"); 
  fprintf(stderr, "    xdim             number of pixels per row\n"); 

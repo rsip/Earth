@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int rad2ref(int argc, char **argv){
  
@@ -50,7 +50,7 @@ int rad2ref(int argc, char **argv){
 }
 
 void rad2refUsage(){
- fprintf(stderr,"Usage: leaf -rad2ref inImg outImg szaImg irradianceFile [dataType] [channels] [scale]\n\n");
+ fprintf(stderr,"Usage: earth -rad2ref inImg outImg szaImg irradianceFile [dataType] [channels] [scale]\n\n");
  fprintf(stderr, "   inImg          input radiance image \n");
  fprintf(stderr, "   szaImg         input solar zenith angle image for each pixel\n");
  fprintf(stderr, "   outImg         output reflectance image \n");

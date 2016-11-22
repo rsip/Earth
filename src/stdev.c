@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int stdv(int argc, char **argv){
  
@@ -50,7 +50,7 @@ int stdv(int argc, char **argv){
 }
 
 void stdevUsage(){
- fprintf(stderr,"Usage: leaf -stdev infile outfile [dataType] [IgnoreValue] [nullValue]\n\n");
+ fprintf(stderr,"Usage: earth -stdev infile outfile [dataType] [IgnoreValue] [nullValue]\n\n");
  fprintf(stderr, "   infile           input textfile of image list\n");
  fprintf(stderr, "   outfile          output image 2\n");   		
  fprintf(stderr, "   dataType         1: byte (default), 2: short, 3: long, 4: float, 8: Double\n");

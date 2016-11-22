@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int runMosaic(int argc, char *argv[]){
 
@@ -63,7 +63,7 @@ int mosaic(FILE *fin, FILE *fmosaic, metaData *p){
 
 void mosaicUsage(){
 
- fprintf(stderr,"Usage: leaf -mosaic mosaicImg inImg mosaicXdim inXdim  xoff yoff bytesPerPixel\n\n");
+ fprintf(stderr,"Usage: earth -mosaic mosaicImg inImg mosaicXdim inXdim  xoff yoff bytesPerPixel\n\n");
  fprintf(stderr, "    mosaicImg       Mosaic image to be overwritten\n");
  fprintf(stderr, "    inImg           Imput image\n");  
  fprintf(stderr, "    mosaicXdim      Number of pixels per row in mosaic image\n");

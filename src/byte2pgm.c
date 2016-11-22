@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int byte2pgm(int argc, char *argv[]){
  
@@ -17,7 +17,7 @@ int byte2pgm(int argc, char *argv[]){
  char *row;   			 
  
  if (argc != 6) {
-  fprintf(stderr,"Usage: leaf -byte2pgm inImg outImg xdim nColours\n");
+  fprintf(stderr,"Usage: earth -byte2pgm inImg outImg xdim nColours\n");
   fprintf(stderr, "    inImg           input byte image\n");
   fprintf(stderr, "    outImg          output pgm image\n");   
   fprintf(stderr, "    xdim            number of pixels per row\n"); 

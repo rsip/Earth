@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int byte2ppm(int argc, char *argv[]){
  
@@ -21,7 +21,7 @@ int byte2ppm(int argc, char *argv[]){
  unsigned char blue[]  ={  0,  0,  0,  0,  0,  0,  0,  0,  0,127,127,127,127,127,127,127,127,127,255,255,255,255,255,255,255,255,255};
 
  if (argc != 5) {
-  fprintf(stderr,"Usage: leaf -byte2ppm infile (byte)  outfile (pgm) xdim\n");
+  fprintf(stderr,"Usage: earth -byte2ppm infile (byte)  outfile (pgm) xdim\n");
   fprintf(stderr, "    infile           input byte image\n");
   fprintf(stderr, "    outfile          output pgm image\n");   
   fprintf(stderr, "    xdim             number of pixels per row\n\n"); 
@@ -66,7 +66,7 @@ int byte2ppm3(int argc, char *argv[]){
  char *row;   			 
  
  if (argc != 5) {
-  fprintf(stderr,"Usage: leaf -byte2ppm3 infile (byte)  outfile (pgm) xdim\n");
+  fprintf(stderr,"Usage: earth -byte2ppm3 infile (byte)  outfile (pgm) xdim\n");
   fprintf(stderr, "    infile           input byte image\n");
   fprintf(stderr, "    outfile          output pgm image\n");   
   fprintf(stderr, "    xdim             number of pixels per row\n\n"); 

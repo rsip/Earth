@@ -10,7 +10,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int diagnosticTest(metaData *p){
 
@@ -204,6 +204,60 @@ float *readFloatData(char *pathName, char *fileName, int n)
 
 } 
 
+short *readShortData(char *pathName, char *fileName, int n)
+{
+ 
+ FILE *fp;
+ short *data;
+
+ fp=openFile(pathName, fileName, "rb");
+ 
+ if((data = (short*) calloc(n,sizeof(short)))==NULL) memoryCheck();  
+ fread(data, sizeof(short), n, fp);
+ 
+ fclose(fp);
+ 
+ return data;
+
+} 
+
+long *readLongData(char *pathName, char *fileName, int n)
+{
+ 
+ FILE *fp;
+ long *data;
+
+ fp=openFile(pathName, fileName, "rb");
+ 
+ if((data = (long *) calloc(n,sizeof(long)))==NULL) memoryCheck();  
+ fread(data, sizeof(long), n, fp);
+ 
+ fclose(fp);
+ 
+ return data;
+
+} 
+
+unsigned char *readByteData(char *pathName, char *fileName, int n)
+{
+ 
+ FILE *fp;
+ unsigned char *data;
+
+ fp=openFile(pathName, fileName, "rb");
+ 
+ if((data = (unsigned char *) calloc(n,sizeof(unsigned char)))==NULL) memoryCheck();  
+ fread(data, sizeof(unsigned char), n, fp);
+ 
+ fclose(fp);
+ 
+ return data;
+
+} 
+
+
+
+
 int memoryCheck(void)	
 {	
  fprintf(stderr,"\nUnable to allocate memory.\n\n");
@@ -311,7 +365,7 @@ double timer()
 {
 /* in code write:
  double startTime=timer();
-at star of program
+at start of program
 
 At end of program write:
  double endTime=timer();

@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int rotate(int argc, char *argv[]){
 
@@ -216,7 +216,7 @@ int calcOutputDimsRotate(int x0, int y0, float cosAng, float sinAng, int *w, int
 }
 
 void rotateUsage(){
- fprintf(stderr,"Usage: leaf -rotate infile outfile xdim [angle] [bpp] [channels]\n\n");
+ fprintf(stderr,"Usage: earth -rotate infile outfile xdim [angle] [bpp] [channels]\n\n");
  fprintf(stderr, "   infile          input image 1\n");
  fprintf(stderr, "   outfile         output image\n");
  fprintf(stderr, "   angle           angle of rotation\n");	   		

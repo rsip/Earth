@@ -8,7 +8,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int covarianceMatrix(int argc, char **argv){
  
@@ -40,7 +40,7 @@ int covarianceMatrix(int argc, char **argv){
 }
 
 void covarianceUsage(){
- fprintf(stderr,"Usage: leaf -covariance inImg [channels] [bytesPerPixel]\n\n");
+ fprintf(stderr,"Usage: earth -covariance inImg [channels] [bytesPerPixel]\n\n");
  fprintf(stderr, "   inImg           Input image                    \n");
  fprintf(stderr, "   channels        Number of channels             \n");
  fprintf(stderr, "   dataType        1: byte (default), 2: short, 3: long, 4: float, 8: Double \n\n");

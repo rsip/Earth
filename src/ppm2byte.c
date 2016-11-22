@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int ppm2byte(int argc, char *argv[]){
  
@@ -22,7 +22,7 @@ int ppm2byte(int argc, char *argv[]){
 
 
  if (argc != 4) {
-  fprintf(stderr,"Usage: leaf -ppm2byte infile outfile\n");
+  fprintf(stderr,"Usage: earth -ppm2byte infile outfile\n");
   fprintf(stderr, "  infile           input ppm image\n");
   fprintf(stderr, "  outfile          output byte image\n\n"); 
   exit(EXIT_FAILURE);

@@ -8,7 +8,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int histoArea(int argc, char **argv){
  
@@ -45,7 +45,7 @@ int histoArea(int argc, char **argv){
 }
 
 void histoAreaUsage(){
- fprintf(stderr,"Usage: leaf -histoArea inImg inCls [channels] [bytesPerPixel]\n\n");
+ fprintf(stderr,"Usage: earth -histoArea inImg inCls [channels] [bytesPerPixel]\n\n");
  fprintf(stderr, "   inImg           Input image                    \n");
  fprintf(stderr, "   inCls           Input classified image         \n");
  fprintf(stderr, "   channels        Number of channels             \n");

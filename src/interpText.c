@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int interpText(int argc, char **argv){
  
@@ -106,7 +106,7 @@ int readTextFile(int *lines, int *cols, float fd[][MAX_FILE_LINES], int skip, ch
 
 
 void interpUsage(){
- fprintf(stderr,"Usage: leaf -interpText inFile outFile startVal interval endVal col skip\n\n");
+ fprintf(stderr,"Usage: earth -interpText inFile outFile startVal interval endVal col skip\n\n");
  fprintf(stderr, "   inFile     Input text file\n");
  fprintf(stderr, "   outFile    Output text file\n");
  fprintf(stderr, "   startVal   Start Value\n");

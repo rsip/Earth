@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int classify(int argc, char **argv){
  
@@ -204,7 +204,7 @@ int classifyDouble(FILE *fin, FILE *fout, metaData *p, float class[][NUM_CLASSES
 
 
 void classifyUsage(){
- fprintf(stderr,"Usage: leaf -classify inImg outImg inputTextFile channels classes\n\n");
+ fprintf(stderr,"Usage: earth -classify inImg outImg inputTextFile channels classes\n\n");
  fprintf(stderr, "   inImg           Input image\n");
  fprintf(stderr, "   outImg          Output image (byte)\n");
  fprintf(stderr, "   inputTextFile   Input class file\n");

@@ -8,7 +8,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.	
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 regressionCoefficients regression(float *xData, float *yData, int n){
 	
@@ -50,7 +50,6 @@ double correlation (float *xData, float *yData, int n){
   ySumSquares += pow((double)yData[i] - yMean,2);
 
  }
- printf("%f %f %f %f %f\n",sumProduct, xSumSquares, ySumSquares, xMean, yMean);
  
  return  SQUARE(sumProduct / ( sqrt(xSumSquares * ySumSquares) ) );
 

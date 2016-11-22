@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int hist(int argc, char **argv){
  
@@ -44,7 +44,7 @@ int hist(int argc, char **argv){
 }
 
 void histogramUsage(){
- fprintf(stderr,"Usage: leaf -hist inImg [channels] [dataType] [Nbins]\n\n");
+ fprintf(stderr,"Usage: earth -hist inImg [channels] [dataType] [Nbins]\n\n");
  fprintf(stderr, "   inImg           Input image                    \n");
  fprintf(stderr, "   channels        Number of channels             \n");
  fprintf(stderr, "   dataType        1: byte (default), 2: short, 3: long, 4: float, 8: Double \n");
@@ -83,7 +83,8 @@ int histoByte (FILE *fin, metaData *p){
 int printHisto(int i, float binSize, float min, float max, int Nbins, int n, long *histogram){
 
  int j;
- fprintf(stdout,"Channel:   %d\n",i);
+ if (i >= 0)
+  fprintf(stdout,"Channel:   %d\n",i);
  fprintf(stdout,"BinSize:   %f\n",binSize);
  fprintf(stdout,"Min:       %f\n",min);
  fprintf(stdout,"Max:       %f\n",max);
@@ -96,37 +97,15 @@ int printHisto(int i, float binSize, float min, float max, int Nbins, int n, lon
  return (EXIT_SUCCESS);
 }
 
-int plotHisto(float *img, int n, float *binSize, float *min, float *max, int Nbins, long *histogram){
-
- int j;
- int bin;
- 
- for (j=0;j<NUM_CLASSES;j++)
-  histogram[j]=0;
-
- for (j=0;j<n;j++){  
-  if (*(img + j) > *max) *max = *(img + j);
-  if (*(img + j) < *min) *min = *(img + j);
- }
-  
- *binSize = (*max - *min) / (float)Nbins;
-
- for (j=0;j<n;j++){
-  bin=(*(img+j)-*min) / *binSize;
-  histogram[bin]++;
- }
-
- return (EXIT_SUCCESS);
-}
-
 int histoFloat (FILE *fin, metaData *p, int Nbins){
 
  float *img;
  float min=1e20, max=-1e20; 
  float binSize;
  int i;
- long histogram[NUM_CLASSES]; 
+ long *histogram; 
 
+ if((histogram  = (long *) calloc(Nbins,sizeof(long)))== NULL) memoryCheck();
  if((img  = (float *) calloc(p->pixels,sizeof(float)))== NULL) memoryCheck(); 
 
  for (i=0;i<p->channels;i++){ 
@@ -146,8 +125,9 @@ int histoDouble(FILE *fin, metaData *p, int Nbins){
  float min=1e20, max=-1e20; 
  float binSize;
  int i;
- long histogram[NUM_CLASSES]; 
+ long *histogram; 
 
+ if((histogram  = (long *) calloc(Nbins,sizeof(long)))== NULL) memoryCheck();
  if((img  = (double *) calloc(p->pixels,sizeof(double)))== NULL) memoryCheck(); 
 
  for (i=0;i<p->channels;i++){ 
@@ -167,8 +147,9 @@ int histoShort(FILE *fin, metaData *p, int Nbins){
  float min=32768.0, max=-32768.0; 
  float binSize;
  int i;
- long histogram[NUM_CLASSES]; 
+ long *histogram; 
 
+ if((histogram  = (long *) calloc(Nbins,sizeof(long)))== NULL) memoryCheck();
  if((img  = (short *) calloc(p->pixels,sizeof(short)))== NULL) memoryCheck(); 
 
  for (i=0;i<p->channels;i++){ 
@@ -188,8 +169,9 @@ int histoLong(FILE *fin, metaData *p, int Nbins){
  float min=2e9, max=-2e9; 
  float binSize;
  int i;
- long histogram[NUM_CLASSES]; 
+ long *histogram; 
 
+ if((histogram  = (long *) calloc(Nbins,sizeof(long)))== NULL) memoryCheck();
  if((img  = (long  *) calloc(p->pixels,sizeof(long)))== NULL) memoryCheck(); 
 
  for (i=0;i<p->channels;i++){ 

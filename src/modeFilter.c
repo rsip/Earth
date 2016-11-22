@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int modeFilter(int argc, char *argv[]){
 
@@ -48,7 +48,7 @@ void mode(FILE *fin, FILE *fout, int xdim, int ydim, int winsize){
 /*  Set line to point to various places within inRows */
  for(i = 0; i < winsize; i++) *(line + i) = inRows + i*xdim;	
  /*  Read in winsize - 1 ydim into inRows  */
- for(i = 0; i < winsize-1; i++) fread(*(line + i), sizeof(char), xdim, fin); 						
+ for(i = 0; i < winsize-1; i++) fread(*(line + i), sizeof(char), xdim, fin); 	
  /* write zero data to edge ydim */
  for (y = 0; y < edge ; y++) fwrite(outRow, sizeof(char), xdim, fout); 
 		
@@ -69,8 +69,9 @@ void mode(FILE *fin, FILE *fout, int xdim, int ydim, int winsize){
    }
   *(outRow + x) = maxval;	
  }
-	
-  fwrite(outRow, sizeof(char), xdim, fout);														
+
+ fwrite(outRow, sizeof(char), xdim, fout);
+	  														
 /* Switch pointers around */							
   topLine = *(line);
   for(i = 0; i < winsize - 1; i++) *(line + i) = *(line + i + 1);	
@@ -86,7 +87,7 @@ void mode(FILE *fin, FILE *fout, int xdim, int ydim, int winsize){
 }
 
 int modeUsage(){
- fprintf(stderr,"Usage: leaf -modeFlter inImg outImg xdim [winsize] \n\n");	 	
+ fprintf(stderr,"Usage: earth -modeFlter inImg outImg xdim [winsize] \n\n");	 	
  fprintf(stderr, "   inImg            Input image (byte)\n");
  fprintf(stderr, "   outImg           Output image (byte)\n");      
  fprintf(stderr, "   xdim             Number of pixels per row\n"); 

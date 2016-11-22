@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int mask(int argc, char **argv)
 {
@@ -47,7 +47,7 @@ int mask(int argc, char **argv)
 }
 
 void maskUsage(){
- fprintf(stderr,"Usage: leaf -mask infile maskfile (Byte) outfile [data_type] \n\n");
+ fprintf(stderr,"Usage: earth -mask infile maskfile (Byte) outfile [data_type] \n\n");
  fprintf(stderr, "   infile           input image\n");
  fprintf(stderr, "   mask file        mask image\n");
  fprintf(stderr, "   outfile          output image\n");	   		

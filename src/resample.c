@@ -8,7 +8,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int resample(int argc, char **argv){
  
@@ -44,7 +44,7 @@ int resample(int argc, char **argv){
 }
 
 void resampleUsage(){
- fprintf(stderr,"Usage: leaf -resample inImg outImg xdim factor [channels] [bytesPerPixel]\n\n");
+ fprintf(stderr,"Usage: earth -resample inImg outImg xdim factor [channels] [bytesPerPixel]\n\n");
  fprintf(stderr, "   inImg           Input image                    \n");
  fprintf(stderr, "   outImg          Output image                   \n");
  fprintf(stderr, "   xdim            Number of pixel in x dimension \n");

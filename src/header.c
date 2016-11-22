@@ -9,7 +9,7 @@ COMPILE:        gcc flip.c utility.c -o flip -Wall
 */
 
 
-#include "leaf.h"
+#include "earth.h"
 
 
 int runHeader(int argc, char **argv){
@@ -35,7 +35,7 @@ int runHeader(int argc, char **argv){
 
 void hdrUsage(){
 
- fprintf(stderr,"\nUsage: leaf -header filename xdim ydim channels dataType [byteOrder] \n\n");
+ fprintf(stderr,"\nUsage: earth -header filename xdim ydim channels dataType [byteOrder] \n\n");
  fprintf(stderr, "    filename      Name of header file to create\n");
  fprintf(stderr, "    xdim          Number of pixels in x\n");
  fprintf(stderr, "    ydim          Number of pixels in y\n");	   

@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int reassign(int argc, char **argv){
  
@@ -93,7 +93,7 @@ int reassignImage(FILE *fin, FILE *fout, int *currentPixVal, int *reassignedPixV
 }
 
 void reassignUsage(){
- fprintf(stderr,"Usage: leaf -reassign inImg inImg inputTextFile\n\n");
+ fprintf(stderr,"Usage: earth -reassign inImg inImg inputTextFile\n\n");
  fprintf(stderr, "   inImg           Input image (byte)\n");
  fprintf(stderr, "   outImg          Output image (byte)\n");
  fprintf(stderr, "   inputTextFile  Input two columns of ascii\n\n"); 	 

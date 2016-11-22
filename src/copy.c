@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int runCopy(int argc, char **argv){
  
@@ -57,7 +57,7 @@ int copy(metaData *hdrData)
 }
 
 void copyUsage(){
- fprintf(stderr,"\nUsage: leaf -copy inImg [outImg] \n\n");
+ fprintf(stderr,"\nUsage: earth -copy inImg [outImg] \n\n");
  fprintf(stderr, "   inImg        Input image\n"); 	   
  fprintf(stderr, "   [outImg]     Output image\n\n");
  exit(EXIT_FAILURE);

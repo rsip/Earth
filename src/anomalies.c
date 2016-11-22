@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int anomalies(int argc, char **argv){
  
@@ -48,7 +48,7 @@ int anomalies(int argc, char **argv){
 }
 
 void anomaliesUsage(char *t){
- fprintf(stderr,"Usage: leaf %s inImg outImg [dataType] [channels] [IgnoreValue] [nullValue]\n\n",t);
+ fprintf(stderr,"Usage: earth %s inImg outImg [dataType] [channels] [IgnoreValue] [nullValue]\n\n",t);
  fprintf(stderr, "   inImg            input image\n");
  fprintf(stderr, "   outImg           output image (float)\n");   		
  fprintf(stderr, "   dataType         1: byte (default), 2: short, 3: long, 4: float, 8: Double\n");

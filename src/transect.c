@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int transect(int argc, char *argv[]){
 
@@ -234,7 +234,7 @@ int getTransectDouble(FILE *fin, metaData *p, int *x, int *y, int n){
 
 void getTransectUsage(){
 
- fprintf(stderr,"Usage: leaf -transect inImg xdim xpos1 ypos1 xpos2 ypos2 [dataType] [Channels] \n");	
+ fprintf(stderr,"Usage: earth -transect inImg xdim xpos1 ypos1 xpos2 ypos2 [dataType] [Channels] \n");	
  fprintf(stderr, "    inImg           Input image\n");
  fprintf(stderr, "    xdim            Number of pixels per row\n");
  fprintf(stderr, "    xpos1           x position of pixel 1 \n");

@@ -9,7 +9,7 @@ LICENSE:	This is free and unencumbered software
 COMPILE:        gcc swap.c utility.c -o swap -Wall
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int runSwap(int argc, char **argv){
 
@@ -102,7 +102,7 @@ int byteSwap(void *dataIn, int n,  int numBytes){
 }
 
 void swapUsage(){
- fprintf(stderr,"\nUsage: leaf -swap infile [outfile] [bpp] \n\n");
+ fprintf(stderr,"\nUsage: earth -swap infile [outfile] [bpp] \n\n");
  fprintf(stderr, "   infile        Input image\n"); 	   
  fprintf(stderr, "   outfile       Output image\n"); 
  fprintf(stderr, "   bpp           bytes per pixel (2,4,8) \n\n");

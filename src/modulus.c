@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int modulus(int argc, char **argv)
 {
@@ -41,7 +41,7 @@ int modulus(int argc, char **argv)
 }
 
 void modUsage(){
- fprintf(stderr,"Usage: leaf -modImg infile outfile [dataType] \n\n");
+ fprintf(stderr,"Usage: earth -modImg infile outfile [dataType] \n\n");
  fprintf(stderr, "   infile          input image 1\n");
  fprintf(stderr, "   outfile         output image\n");	   		
  fprintf(stderr, "   dataType        1: byte (default), 2: short, 3: long, 4: float, 8: Double\n\n");

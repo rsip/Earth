@@ -1,7 +1,7 @@
 /*
 NAME:		demSlope.c 
 DESCRIPTION: 	Calculates the slope and 
-		aspect from an input DEM float image using the 
+		aspect from an input DEM float image   using the 
 		method of Zevenbergen and Thorne.
 REFERENCE:	Zevenbergen and Thorne (1987), Quantitative 
                 analysis of land surface topography.  
@@ -13,16 +13,17 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int demSlope(int argc, char **argv){
  
  metaData p;
  FILE *fin, *fslope, *faspect;
  float spacing;
+ int method=1;
  struct stat size;
  
- if (argc != 7) demSlopeUsage();
+ if (argc < 7) demSlopeUsage();
  
  fin=openFile("",argv[ 2 ],"rb");
  fslope=openFile("",argv[ 3 ],"wb");
@@ -30,13 +31,14 @@ int demSlope(int argc, char **argv){
 	
  p.xdim=atoi(argv[ 5 ]);
  spacing = atof(argv[ 6 ]);
+ method = atoi(argv[ 7 ]);
  p.bpp=4;
  
  if (stat(argv[2], &size) == -1) fileReadError(argv[2]);
  else p.ydim = size.st_size / (p.xdim * p.bpp);
 	
- demSlopeFloat(fin,fslope,faspect,&p,spacing);
- 
+ if (method == 0) demSlopeFloat(fin,fslope,faspect,&p,spacing);
+ if (method == 1) demSlopeFloat1(fin,fslope,faspect,&p,spacing);
 	
  fclose(fin);
  fclose(fslope);
@@ -47,13 +49,60 @@ int demSlope(int argc, char **argv){
 }
 
 void demSlopeUsage(){
- fprintf(stderr,"Usage: leaf -demSlope inDEM outSlope outAspect xdim spacing\n\n");
+ fprintf(stderr,"Usage: earth -demSlope inDEM outSlope outAspect xdim spacing [method]\n\n");
  fprintf(stderr, "   inDEM            input DEM image \n");
  fprintf(stderr, "   outSlope         Output slope image\n");
  fprintf(stderr, "   outAspect        Output aspect image\n");
  fprintf(stderr, "   xdim             Number of pixels in x dimension \n");
- fprintf(stderr, "   spacing          Pixel spacing (m) \n\n");	   		
+ fprintf(stderr, "   spacing          Pixel spacing (m) \n");	
+ fprintf(stderr, "   method           0 (Zeverbergen and Thorne) / 1 (more rigorous approach) \n\n");	   		
  exit(EXIT_FAILURE);
+}
+
+
+int demSlopeFloat1(FILE *fin, FILE *fslope, FILE *faspect, metaData *p, float d){
+
+ float *dem;
+ float *slope, *aspect;
+ int x, y, i, j, edge=1;
+ float dzdy, dzdx;
+ float z[SLOPE_PTS];
+	
+ if((dem     = (float *) calloc(p->xdim*p->ydim,sizeof(float)))== NULL) memoryCheck();	
+ if((slope  = (float *) calloc(p->xdim*p->ydim,sizeof(float)))== NULL) memoryCheck();	
+ if((aspect = (float *) calloc(p->xdim*p->ydim,sizeof(float)))== NULL) memoryCheck();	
+ 
+ 
+ fread(dem,sizeof(float),p->xdim*p->ydim,fin);
+ 
+ for(y=edge; y < p->ydim-edge; y++){ 
+ 
+  for(x=edge; x < p->xdim-edge; x++){
+   for (i=0;i<3;i++)
+    for (j=0;j<3;j++)
+     z[i*3+j+1]= *(dem + ((y + (i-1)) * p->xdim) + x + (j-1));
+ 
+   dzdx = (z[3] + (2 * z[6]) + z[9] - z[1] -(2 * z[4]) - z[7]) / (8 * d);
+   dzdy = (z[1] + (2 * z[2]) + z[3] - z[7] -(2 * z[8]) - z[9]) / (8 * d);
+
+   *(slope + (y * p->xdim) + x)  = RTOD(atan((float)sqrt((dzdx * dzdx) + (dzdy * dzdy))));
+   *(aspect + (y * p->xdim) + x) = RTOD(atan2(dzdx,dzdy));
+
+   if (dzdy > 0.0) *(aspect + (y * p->xdim) + x) = *(aspect + (y * p->xdim) + x) + 180.0;
+   if (dzdy < 0.0 && dzdx > 0.0) *(aspect + (y * p->xdim) + x) = *(aspect + (y * p->xdim) + x) + 360.0;
+
+  }
+ }
+
+ fwrite(slope, sizeof(float), p->xdim * p->ydim, fslope);			
+ fwrite(aspect, sizeof(float), p->xdim * p->ydim, faspect);
+	
+ free(dem);
+ free(slope);
+ free(aspect);
+	
+ return (EXIT_SUCCESS);
+
 }
 
 

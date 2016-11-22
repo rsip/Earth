@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int calibrate(int argc, char **argv){
  
@@ -73,7 +73,7 @@ int readGainOffset(FILE *ftext, float *gain, float *offset){
 }
 
 void calibrateUsage(){
- fprintf(stderr,"Usage: leaf -calibrate inImg outImg gainOffsetFile [dataType] [channels] [ignoreZeroValue]\n\n");
+ fprintf(stderr,"Usage: earth -calibrate inImg outImg gainOffsetFile [dataType] [channels] [ignoreZeroValue]\n\n");
  fprintf(stderr, "   inImg            input image\n");
  fprintf(stderr, "   outImg           output image\n");
  fprintf(stderr, "   gainOffsetFile   File containing gain and offset for each channel: \n");   	

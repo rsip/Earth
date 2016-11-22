@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 
 int i[MAX_NUM_CHANNELS];
@@ -80,7 +80,7 @@ int readHistFile(FILE *f, int *row2, int *band2){
 
 
 void separabilityUsage(){
- fprintf(stderr,"Usage: leaf -separability inputtextfile <lines> <channels>\n\n");
+ fprintf(stderr,"Usage: earth -separability inputtextfile <lines> <channels>\n\n");
  fprintf(stderr, "  inputtextfile  text file of histograms (class i band 1,2,3....class j band 1,2,3\n"); 
  fprintf(stderr, "  lines           \n");
  fprintf(stderr, "  channels \n\n");	 

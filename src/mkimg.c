@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int mkimg(int argc, char **argv)
 {
@@ -45,7 +45,7 @@ int mkimg(int argc, char **argv)
 }
 
 void mkimgUsage(){
- fprintf(stderr,"Usage: leaf -mkimg outImg xdim ydim dataType pixVal [channels]\n\n"); 
+ fprintf(stderr,"Usage: earth -mkimg outImg xdim ydim dataType pixVal [channels]\n\n"); 
  fprintf(stderr, "   outImg          Name of image to create\n");
  fprintf(stderr, "   xdim            Number of pixels in x dimension \n");
  fprintf(stderr, "   ydim            Number of pixels in y dimension \n");

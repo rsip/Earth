@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int getPixelValue(int argc, char *argv[]){
 
@@ -101,7 +101,7 @@ int getPixel(FILE *fin, metaData *p){
 
 void getPixelUsage(){
 
- fprintf(stderr,"Usage: leaf -getPixelValue inImg xdim xpos ypos dataType [channels]\n");	
+ fprintf(stderr,"Usage: earth -getPixelValue inImg xdim xpos ypos dataType [channels]\n");	
  fprintf(stderr, "    inImg           Input image\n");
  fprintf(stderr, "    xdim            Number of pixels per row\n");
  fprintf(stderr, "    xpos            x position of pixel \n");

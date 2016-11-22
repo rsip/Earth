@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int add(int argc, char **argv)
 {
@@ -48,7 +48,7 @@ int add(int argc, char **argv)
 }
 
 void arithmaticUsage(char *option){
- fprintf(stderr,"Usage: leaf %s infile1 infile2 outfile [data_type] \n\n", option);
+ fprintf(stderr,"Usage: earth %s infile1 infile2 outfile [data_type] \n\n", option);
  fprintf(stderr, "   infile1          input image 1\n");
  fprintf(stderr, "   infile2          input image 2\n");
  fprintf(stderr, "   outfile          output image\n");	   		

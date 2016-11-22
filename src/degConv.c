@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int degConv(int argc, char *argv[]){
  int deg, min, sec=0;
@@ -36,7 +36,7 @@ int degConv(int argc, char *argv[]){
 }
 
 void degUsage(){
- fprintf(stderr,"Usage: leaf -degConv <degrees> [minutes] [seconds]\n\n");
+ fprintf(stderr,"Usage: earth -degConv <degrees> [minutes] [seconds]\n\n");
  exit(EXIT_FAILURE);
 }
 

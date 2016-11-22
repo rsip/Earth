@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int complex(int argc, char **argv, int (*f)(FILE *, FILE *, FILE *)){
  
@@ -109,7 +109,7 @@ int complex2RealImag(FILE *fcomplex, FILE *freal, FILE *fimag){
 }
 
 void complexUsage(char *tool){
- fprintf(stderr,"Usage: leaf %s complexfile realfile imagfile \n\n",tool);
+ fprintf(stderr,"Usage: earth %s complexfile realfile imagfile \n\n",tool);
  fprintf(stderr, "   complexfile      input complex image\n");
  fprintf(stderr, "   realfile         output real image\n");
  fprintf(stderr, "   imagfile         output imaginary image\n\n");

@@ -8,7 +8,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int spectralResponse(int argc, char **argv){
  
@@ -130,7 +130,7 @@ int spectralVal(FILE *ftext, float *currentPixVal, double *reassignedPixVal){
 }
 
 void spectralUsage(){
- fprintf(stderr,"Usage: leaf -spectralResponse srfFile [spectraFile/planck]\n\n");
+ fprintf(stderr,"Usage: earth -spectralResponse srfFile [spectraFile/planck]\n\n");
  fprintf(stderr, "   srfFile        Spectral response function file\n");
  fprintf(stderr, "   spectraFile    For surface or atmospheric spectra / planck model\n\n");
  exit(EXIT_FAILURE); 

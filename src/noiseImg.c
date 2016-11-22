@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int addNoiseImg(int argc, char **argv){
  
@@ -36,7 +36,7 @@ int addNoiseImg(int argc, char **argv){
 }
 
 void addNoiseImgUsage(){
- fprintf(stderr,"Usage: leaf -addNoiseImg inImg outImg sigma [dataType]\n\n");
+ fprintf(stderr,"Usage: earth -addNoiseImg inImg outImg sigma [dataType]\n\n");
  fprintf(stderr, "   inImg           input image\n");
  fprintf(stderr, "   outImg          output image\n");
  fprintf(stderr, "   sigma           add standard deviation such that r = sigma * z + mu \n");   		

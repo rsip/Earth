@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int interleave(int argc, char **argv, int (*f)(FILE *, FILE *, metaData *)){
  
@@ -44,7 +44,7 @@ int interleave(int argc, char **argv, int (*f)(FILE *, FILE *, metaData *)){
 }
 
 void interleaveUsage(char *tool){
- fprintf(stderr,"\nUsage: leaf %s infile outfile xdim [channels] [bytesPerPixel] \n\n",tool);
+ fprintf(stderr,"\nUsage: earth %s infile outfile xdim [channels] [bytesPerPixel] \n\n",tool);
  fprintf(stderr, "   infile:            input image \n");
  fprintf(stderr, "   outfile:           output image \n");    
  fprintf(stderr, "   xdim:              number of pixels per line\n");

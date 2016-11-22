@@ -8,7 +8,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int addNoise(int argc, char **argv){
 
@@ -42,7 +42,7 @@ int addNoise(int argc, char **argv){
 
 
 void noiseUsage(){
- fprintf(stderr,"Usage: leaf -addNoise inputTextfile outputTextfile sigma\n\n");
+ fprintf(stderr,"Usage: earth -addNoise inputTextfile outputTextfile sigma\n\n");
  fprintf(stderr, "   inputTextfile  Input text file\n");
  fprintf(stderr, "   outputTextfile Output text file\n");
  fprintf(stderr, "   sigma          Standard deviation of error\n\n");	 

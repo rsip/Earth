@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int linear2Dinterp(int argc, char *argv[]){
 
@@ -50,7 +50,7 @@ int linear2Dinterp(int argc, char *argv[]){
 
 void linear2DinterpUsage(){
 
- fprintf(stderr,"Usage: leaf -linear2Dinterp inImg outImg xdim xscale yscale [channels] [dataType] \n");	
+ fprintf(stderr,"Usage: earth -linear2Dinterp inImg outImg xdim xscale yscale [channels] [dataType] \n");	
  fprintf(stderr, "    inImg           Input image\n");
  fprintf(stderr, "    outImg          Output image\n");
  fprintf(stderr, "    xdim            Number of pixels per row\n");

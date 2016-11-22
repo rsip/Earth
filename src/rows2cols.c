@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int rows2cols(int argc, char *argv[]){
  
@@ -18,7 +18,7 @@ int rows2cols(int argc, char *argv[]){
  char *p;
 
  if (argc != 4) {
-  fprintf(stderr,"Usage: leaf -rows2cols inImg outImg\n\n");
+  fprintf(stderr,"Usage: earth -rows2cols inImg outImg\n\n");
   fprintf(stderr, "  inImg           input text image\n");
   fprintf(stderr, "  outImg          output text image\n\n"); 
   exit(EXIT_FAILURE);

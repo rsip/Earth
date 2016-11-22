@@ -1,5 +1,5 @@
 /*
-NAME:		leaf.h 
+NAME:		earth.h 
 DESCRIPTION: 	Header file
 AUTHOR:	 	Will Grey
 VERSION:	2015-10-29	
@@ -22,6 +22,7 @@ LICENSE:	This is free and unencumbered software
 
 #define MAGIC_NUM_LEN 2
 #define MAX_LINE_LEN 20000
+#define MAX_COL_LEN 2000000
 #define MAX_NUM_FILES 1000
 #define MAX_NUM_COLS 200
 #define MAX_NUM_LINES 1000
@@ -35,6 +36,7 @@ LICENSE:	This is free and unencumbered software
 #define MAX_COLOURS 27
 #define TEXT_LINE_LEN 1000
 #define NUM_CLASSES 256
+#define MAX_NUM_CLASSES 256
 #define MAX_DIR_NAME_SIZE 1000
 #define MAX_NUM_GCPS 2000
 #define MAX_NUM_CHANNELS 100
@@ -49,6 +51,8 @@ LICENSE:	This is free and unencumbered software
 #define SPECTRAL_RESOLUTION 2400
 #define SOLAR_SPEC_MIN 100
 #define SOLAR_SPEC_MAX 2500
+#define SLOPE_PTS 10
+#define SHADE_CONSTANT 255
 
 typedef struct {
  char infile[MAX_FILE_NAME_SIZE];
@@ -84,10 +88,16 @@ typedef struct {
  int ignoreValue;
  int nullValue;
  int classes;
- int lines; 
+ int lines;
+ int ar; 
 } metaData ;
 
-
+typedef struct{
+ short x;
+ short y;
+ double max;
+ double snr;
+ } offset ;
 
 typedef union data
 {
@@ -101,6 +111,8 @@ typedef union data
 typedef struct {
  int pixels;
  unsigned char nClasses;
+ int flag;
+ int timesteps;
  unsigned long matrix[NUM_CLASSES][NUM_CLASSES];
  unsigned long rowTotal[NUM_CLASSES];
  unsigned long colTotal[NUM_CLASSES];
@@ -139,6 +151,9 @@ FILE *openFile(char *, char *, char *);
 int memoryCheck(void);
 double timer(void);
 float *readFloatData(char *, char *, int);
+unsigned char *readByteData(char *, char *, int);
+long *readLongData(char *, char *, int);
+short *readShortData(char *, char *, int);
 int checkFileExists(char *f);
 int fileReadError(char *);
 int fileSizeErr(char *, char *);
@@ -149,9 +164,9 @@ int getYdim2(char *, metaData *);
 int getPixels(char *, metaData *);
 int diagnosticTest(metaData *);
 
-/* leaf.c */
+/* earth.c */
 void readHdrData(int , char **);
-void usageLeaf();
+void usageEarth();
 int initialiseHdrData(metaData *hdrData);
 int readArg(char *, char *);
 
@@ -219,6 +234,15 @@ int addLong(FILE *fin1, FILE *fin2, FILE *fout);
 int addByte (FILE *fin1, FILE *fin2, FILE *fout);
 void arithmaticUsage(char *);
 int add(int, char **);
+
+/* ndvi.c */
+int ndviDouble (FILE *fin1, FILE *fin2, FILE *fout);
+int ndviFloat (FILE *fin1, FILE *fin2, FILE *fout);
+int ndviShort (FILE *fin1, FILE *fin2, FILE *fout);
+int ndviLong(FILE *fin1, FILE *fin2, FILE *fout);
+int ndviByte (FILE *fin1, FILE *fin2, FILE *fout);
+int ndvi(int, char **);
+
 
 /* ratioImg.c */
 int ratioDouble (FILE *fin1, FILE *fin2, FILE *fout);
@@ -335,12 +359,15 @@ int mosaic(FILE *, FILE *, metaData *);
 int runMosaic(int, char **);
 
 /* text.c */
+int ar(int, char **);
 int getNumLines(int, char **);
 int getNumLinesAll(int, char **);
 int calcTotalMean(int, char **);
+int meanWindow(int, char **);
 void textUsage(char *);
 void sideCatUsage(char *);
 int sideCat(int,  char **);
+void meanWindowUsage(char *);
 
 /* areaCounter.c */
 int areaCounter(int, char **);
@@ -377,9 +404,26 @@ int meanImgFloat(FILE **, FILE *, metaData *, int);
 int meanImgLong(FILE **, FILE *, metaData *, int);
 int meanImgShort(FILE **, FILE *, metaData *, int);
 int meanImgByte(FILE **, FILE *, metaData *, int);
-void meanUsage();
+void meanUsage(char *);
 FILE ** openMultipleFiles(FILE *, int *);
 int mean(int, char **);
+
+/* minImg.c */
+int minImgDouble(FILE **, FILE *, metaData *, int);
+int minImgFloat(FILE **, FILE *, metaData *, int);
+int minImgLong(FILE **, FILE *, metaData *, int);
+int minImgShort(FILE **, FILE *, metaData *, int);
+int minImgByte(FILE **, FILE *, metaData *, int);
+int minImg(int, char **);
+
+/* maxImg.c */
+int maxImgDouble(FILE **, FILE *, metaData *, int);
+int maxImgFloat(FILE **, FILE *, metaData *, int);
+int maxImgLong(FILE **, FILE *, metaData *, int);
+int maxImgShort(FILE **, FILE *, metaData *, int);
+int maxImgByte(FILE **, FILE *, metaData *, int);
+int maxImg(int, char **);
+
 
 /* stdev.c */
 int stdevImgDouble(FILE **, FILE *, metaData *, int);
@@ -514,7 +558,6 @@ int histoByte (FILE *, metaData *);
 void histogramUsage();
 int hist(int, char **);
 int printHisto(int, float, float, float, int, int, long *);
-int plotHisto(float *, int, float *, float *, float *, int, long *);
 
 /* histoArea.c */
 int histoCls (int, unsigned char *, float *, float *, metaData *, int);
@@ -594,7 +637,151 @@ int addNoiseImgFloat(FILE *, FILE *, double);
 void addNoiseImgUsage();
 int addNoiseImg(int, char **);
 
-/* demSlope */
+/* demSlope.c */
 int demSlopeFloat(FILE *, FILE *, FILE *, metaData *, float);
+int demSlopeFloat1(FILE *, FILE *, FILE *, metaData *, float);
 void demSlopeUsage();
 int demSlope(int, char **);
+
+/* demShade.c */
+int demShadeFloat(FILE *, FILE *, FILE *, metaData *, float, float);
+void demShadeUsage();
+int demShade(int, char **);
+
+/* autoregression.c */
+int autoregressive(int, char **);
+void arUsage();
+int autor(FILE **, FILE **, FILE *, metaData *, int);
+
+/* demVolume.c */
+int demVol(FILE *, metaData *, float, float);
+void demVolumeUsage();
+int demVolume(int, char **);
+
+/* area.c */
+int areaDouble(FILE *, metaData *, float);
+int areaFloat(FILE *, metaData *, float);
+int areaLong(FILE *, metaData *, float);
+int areaShort(FILE *, metaData *, float);
+int areaByte(FILE *, metaData *, float);
+void areaCalcUsage();
+int areaCalc(int, char **);
+
+/* solZen.c */
+void zenithUsage();
+int dayOfYear(int, int);
+int zenith(int, char **);
+
+/* trainCA.c */
+int printTrainCA(FILE *, conf *);
+int trainCAUsage();
+int trainCA(int , char **);
+
+/* automata.c */
+int automataUsage();
+int readTransitionMatrix(char *, float [][MAX_NUM_CLASSES]);
+int automata(int, char **);
+
+/* tsspec */
+int tsspec(int, char **);
+void usageTsa(char *);
+int readData(float *, float *, char *);
+int checkInterval(float *, int, float *);
+int detrend(float *, float *, int, regressionCoefficients);
+int dftPower(float *, float *, int);
+float * smoothSpec(float *, int);
+int cosEndTaper(float *, float *, int, float);
+int getLength(char *);
+
+/* crosspec.c */
+void usageCross(char *);
+int normalise(float *, int);
+float * calcspec(float *, float *, float *, float *, int, char *, int, float *);
+int dftPowerReIm(float *, float *, float *, float *, int);
+int getLength(char *);
+int crosspec(int, char **);
+int normaliseSpec(float *, int);
+
+/* colocate.c */
+int colocateUsage();
+offset cci(float *, float *, int, int, int);
+int colocate(int, char **);
+
+
+/* bitConv.c */
+int runBitConvert(int, char **, int (*f)(metaData *, int));
+void usageBitConv(char *);
+int byte2bit(metaData *, int);
+int bit2byte(metaData *, int );
+unsigned char byte2bitsConv(unsigned char *);
+unsigned char * bits2byteConv(unsigned char);
+
+/* eval_clusters.c */
+void eval_clusters(FILE *, FILE *, unsigned int, unsigned int, unsigned int);
+void eval_clusters_usage();
+int run_eval_clusters(int, char **);
+
+/* remove_clusters.c */
+void remove_big_clusters_int(FILE *fin, FILE *fout, unsigned int, unsigned int, unsigned int);
+void remove_big_clusters_byte(FILE *fin, FILE *fout, unsigned int , unsigned int, unsigned int);
+void remove_small_clusters_int(FILE *fin, FILE *fout, unsigned int, unsigned int, unsigned int);
+void remove_small_clusters_byte(FILE *fin, FILE *fout, unsigned int, unsigned int, unsigned int);
+void clusters_usage(char *);
+int run_clusters(int, char **, void (*f)(FILE *, FILE*, unsigned int, unsigned int, unsigned int));
+
+/* count_clusters.c */
+
+void count_clusters_usage(char *);
+int run_count_clusters(int, char **, void (*f)(FILE *, FILE*, unsigned int, unsigned int, unsigned int));
+
+void count_clusters_int(FILE *fin, FILE *fout, unsigned int, unsigned int, unsigned int);
+void count_clusters_byte(FILE *fin, FILE *fout, unsigned int, unsigned int, unsigned int);
+
+void identify_clusters_byte(unsigned char *, unsigned int, unsigned int);
+void homogenise_clusters_forwards_byte(unsigned char *, unsigned int, unsigned int);
+void homogenise_clusters_backwards_byte(unsigned char *, unsigned int, unsigned int);
+void horizontal_edge_clusters_byte(unsigned char *, unsigned int, unsigned int); 
+void vertical_edge_clusters_byte(unsigned char *, unsigned int, unsigned int); 
+void reassign_clusters_byte(unsigned char *, unsigned int, unsigned int);
+void stat_clusters_byte(unsigned char *, unsigned int, unsigned int);
+
+void identify_clusters_int(unsigned int *, unsigned int, unsigned int);
+void homogenise_clusters_forwards_int(unsigned int *, unsigned int, unsigned int);
+void homogenise_clusters_backwards_int(unsigned int *, unsigned int, unsigned int);
+void horizontal_edge_clusters_int(unsigned int *, unsigned int, unsigned int); 
+void vertical_edge_clusters_int(unsigned int *, unsigned int, unsigned int); 
+void reassign_clusters_int(unsigned int *, unsigned int, unsigned int);
+void stat_clusters_int(unsigned int *, unsigned int, unsigned int);
+
+/* bivariateStats.c */
+int read_bivariate_data(FILE *, float *, float *, int);
+int bivariate_stats(int, char *[]);
+
+/* univariate.c */
+void stats_usage(char *s);
+int read_univariate_data(FILE *ftext, float *x, int pts);
+int univariate(int, char *[]);
+int histText(int, char **);
+void hist_stats_usage(char *s);
+
+
+/* kriging.c */
+int filePtsError();
+int readPoint(FILE *, float *, float *, float *, int);
+int getNumPts(char *);
+void krigingUsage();
+void kriging_point_usage();
+int variogram(float *, float *, float *, float *, float *, int , int, float);
+int kriging(int argc, char *argv[]);
+int kriging_point(int argc, char *argv[]);
+float exponential_model(float, float, float);
+float gaussian_model(float, float, float);
+float spherical_model(float, float, float);
+float linear_model(float, float, float);
+double *calc_g_vector(float *, float *, int, float, float, float (*f)(float, float, float), float, float);
+double ** calc_gamma_matrix(float *, float *, int, float(*f)(float, float, float), float, float);
+double calc_krig_value(double *, float *, int);
+
+float merit_function(double *, float *, float *, int, int);
+double * fit_variogram_model(float *, float *, int, int);
+

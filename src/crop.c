@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int runCrop(int argc, char *argv[]){
 
@@ -69,7 +69,7 @@ int crop(FILE *fin, FILE *fout, metaData *p){
 
 void cropUsage(){
 
- fprintf(stderr,"Usage: leaf -crop inImg cropImg xdim xoffset yoffset xsize ysize bytesPerPixel [channels] \n\n");
+ fprintf(stderr,"Usage: earth -crop inImg cropImg xdim xoffset yoffset xsize ysize bytesPerPixel [channels] \n\n");
  fprintf(stderr, "    inImg           Input image\n");
  fprintf(stderr, "    outImg          Output crop image\n");  
  fprintf(stderr, "    xdim            Number of pixels per row\n");

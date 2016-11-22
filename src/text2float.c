@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int runTxt2float(int argc, char **argv){
  
@@ -22,7 +22,7 @@ int runTxt2float(int argc, char **argv){
 }
 
 void usageTxt2float(char *tool){
- fprintf(stderr,"\nUsage: leaf %s infile outfile \n\n", tool);
+ fprintf(stderr,"\nUsage: earth %s infile outfile \n\n", tool);
  fprintf(stderr, "   infile        Input image\n"); 	   
  fprintf(stderr, "   outfile       Output image\n\n");
  exit(EXIT_FAILURE);

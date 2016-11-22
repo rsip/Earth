@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int runLinear2dB(int argc, char **argv, int (*f)(FILE *, FILE*, float *, float *, metaData *, float)){
  
@@ -108,7 +108,7 @@ int dB2linear(FILE *fin, FILE *fout, float *inImg, float *outImg, metaData *hdrD
 }
 
 void linear2dBUsage(char *tool){
- fprintf(stderr,"Usage: leaf %s inImg outImg [null value]\n\n",tool);		
+ fprintf(stderr,"Usage: earth %s inImg outImg [null value]\n\n",tool);		
  fprintf(stderr, "   inImg           input image (float)\n");
  fprintf(stderr, "   outImg          output image (float)\n");	   
  fprintf(stderr, "   null value      default: 0.0\n\n");		

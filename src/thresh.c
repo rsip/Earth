@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int thresh(int argc, char **argv)
 {
@@ -46,7 +46,7 @@ int thresh(int argc, char **argv)
 }
 
 void threshUsage(){
- fprintf(stderr,"Usage: leaf -thresh infile outfile max_thresh min_thresh [data_type] \n\n");
+ fprintf(stderr,"Usage: earth -thresh infile outfile max_thresh min_thresh [data_type] \n\n");
  fprintf(stderr, "   infile          input image 1\n");
  fprintf(stderr, "   outfile          output image\n");
  fprintf(stderr, "   threshold (max)  upper threshold value \n");

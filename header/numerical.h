@@ -1,5 +1,5 @@
 /*
-NAME:		numerical.h 
+NAME:		earth.h 
 DESCRIPTION: 	header file for function prototypes	
 AUTHOR:	 	Will Grey
 VERSION:	2015-05-05	
@@ -90,7 +90,7 @@ double StandardErrorOfMean(float  *, int);
 int univStats(float  *, int, univariateStats *);
 int univStatsByte(unsigned char *, int, univariateStats *);
 double sum (float *, int);
-
+int plotHisto(float *, int, float *, float *, float *, int, long *);
 
 /* bivariateStats.c */
 regressionCoefficients regression(float *, float *, int);
@@ -98,6 +98,17 @@ double correlation (float *, float *, int);
 double covariance (float *, float *, int);
 double rmse (float *, float *, int);
 double bias (float *, float *, int);
+
+/* simplex.c */
+int repositionSimplex(short int *, double **, int);
+int sortSimplex(double *, int, short int *);
+int calcCentroid(double **, int, double *);
+double simplexFit (double **, int , float *, float *, int, int);
+
+/* golden.c */
+float merit_function_golden(double *, float *, float *, int, int);
+double goldenFit (double, double, float *, float *, int, int);
+double * fit_variogram_model_golden(float *, float *, int, int);
 
 /* matrix.c */
 void freeDoubleVector(double * );
@@ -157,5 +168,5 @@ int LUFactotisation (int, double **, double **, double **);
 double * LUSolver(double **, double *, int);
 double multipleCorrelation(double **, double *, int, int, double *);
 double * multipleLinearRegression(double **, double *, int, int);
+double * multiplyMatrixVector(double **, double *,  int, int);
 
-	

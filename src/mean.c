@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int mean(int argc, char **argv){
  
@@ -19,7 +19,7 @@ int mean(int argc, char **argv){
  hdrData.ignoreValue = 1;
  hdrData.nullValue = 0.0;
 
- if (argc < 4) meanUsage();	 
+ if (argc < 4) meanUsage("mean");	 
 
  ftext=openFile("",argv[2],"rb");
  fout=openFile("",argv[3],"wb");	
@@ -70,8 +70,8 @@ FILE ** openMultipleFiles(FILE *ftext, int *nFiles){
  return fin;
 }
 
-void meanUsage(){
- fprintf(stderr,"Usage: leaf -mean infile outfile [dataType] [IgnoreValue] [nullValue]\n\n");
+void meanUsage(char *s){
+ fprintf(stderr,"Usage: earth -%s infile outfile [dataType] [IgnoreValue] [nullValue]\n\n",s);
  fprintf(stderr, "   infile           input textfile of image list\n");
  fprintf(stderr, "   outfile          output image\n");   		
  fprintf(stderr, "   dataType         1: byte (default), 2: short, 3: long, 4: float, 8: Double\n");

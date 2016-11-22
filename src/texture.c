@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int textureFilter(int argc, char *argv[]){
 
@@ -291,7 +291,7 @@ void textureDouble(FILE *fin, FILE *fout, int xdim, int ydim, int winsize){
 
 
 int textureFiltUsage(){
- fprintf(stderr,"Usage: leaf -texture inImg outImg xdim [winsize] [dataType] \n\n");	 	
+ fprintf(stderr,"Usage: earth -texture inImg outImg xdim [winsize] [dataType] \n\n");	 	
  fprintf(stderr, "   inImg            Input image (byte)\n");
  fprintf(stderr, "   outImg           Output image (byte)\n");      
  fprintf(stderr, "   xdim             Number of pixels per row\n"); 

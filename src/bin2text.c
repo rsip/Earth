@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int runTextConvert(int argc, char **argv, int (*f)(metaData *)){
  
@@ -24,7 +24,7 @@ int runTextConvert(int argc, char **argv, int (*f)(metaData *)){
 }
 
 void usageTextConvert(char *tool){
- fprintf(stderr,"\nUsage: leaf %s infile outfile xdim \n\n", tool);
+ fprintf(stderr,"\nUsage: earth %s infile outfile xdim \n\n", tool);
  fprintf(stderr, "   infile        Input image\n"); 	   
  fprintf(stderr, "   outfile       Output image\n");
  fprintf(stderr, "   xdim          Number of pixels in x dimension\n\n");

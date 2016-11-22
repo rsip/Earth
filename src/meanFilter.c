@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int meanFilter(int argc, char *argv[]){
 
@@ -263,7 +263,7 @@ void meanDouble(FILE *fin, FILE *fout, int xdim, int ydim, int winsize){
 
 
 int meanFiltUsage(){
- fprintf(stderr,"Usage: leaf -meanFlter inImg outImg xdim [winsize] [dataType] \n\n");	 	
+ fprintf(stderr,"Usage: earth -meanFlter inImg outImg xdim [winsize] [dataType] \n\n");	 	
  fprintf(stderr, "   inImg            Input image (byte)\n");
  fprintf(stderr, "   outImg           Output image (byte)\n");      
  fprintf(stderr, "   xdim             Number of pixels per row\n"); 

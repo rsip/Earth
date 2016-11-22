@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int areaCounter(int argc, char **argv){
 
@@ -46,7 +46,7 @@ int areaCounter(int argc, char **argv){
 }
 
 void areaUsage(){
- fprintf(stderr,"Usage: leaf -areaCounter inImg\n");
+ fprintf(stderr,"Usage: earth -areaCounter inImg\n");
  fprintf(stderr, "   inImg           input image (byte)\n\n");
  exit(EXIT_FAILURE);
 }

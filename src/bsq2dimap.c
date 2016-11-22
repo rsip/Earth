@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int bsq2dimap(int argc, char **argv){
  
@@ -57,7 +57,7 @@ FILE ** openMultipleWriteFiles(int channels, char *path, char *name){
 }
 
 void bsq2dimapUsage(){
- fprintf(stderr,"Usage: leaf -bsq2dimap infile outdir [channels] \n\n");
+ fprintf(stderr,"Usage: earth -bsq2dimap infile outdir [channels] \n\n");
  fprintf(stderr, "   infile          input image\n");
  fprintf(stderr, "   outdir          output directory \n");   		
  fprintf(stderr, "   [channels]      default = 3\n\n");

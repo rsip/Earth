@@ -7,7 +7,7 @@ LICENSE:	This is free and unencumbered software
                 released into the public domain.
 */
 
-#include "leaf.h"
+#include "earth.h"
 
 int dimap2bsq(int argc, char **argv){
  
@@ -39,7 +39,7 @@ int dimap2bsq(int argc, char **argv){
 }
 
 void dimap2bsqUsage(){
- fprintf(stderr,"Usage: leaf -dimap2bsq indir outfile \n\n");
+ fprintf(stderr,"Usage: earth -dimap2bsq indir outfile \n\n");
  fprintf(stderr, "   indir          input path (Dimap folder) 1\n");
  fprintf(stderr, "   outImg         output image \n\n");   		
  exit(EXIT_FAILURE);
